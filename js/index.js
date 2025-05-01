@@ -1,0 +1,967 @@
+// function sleep(ms) {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// }
+
+// async function retryPromise(fn, retries = 3, delay = 1000) {
+//   for (let i = 0; i < retries; i++) {
+//     try {
+//       return await fn(); // Try to execute the function
+//     } catch (err) {
+//       if (i === retries - 1) {
+//         throw err; // If it's the last attempt, throw the error
+//       }
+//       console.log(`Attempt ${i + 1} failed, retrying in ${delay}ms...`);
+//       await sleep(delay); // Wait before retrying
+//     }
+//   }
+// }
+
+// // Example usage:
+
+// const fetchData = () => {
+//   return new Promise((resolve, reject) => {
+//     // Simulate a network request with a random failure
+//     const success = Math.random() > 0.5;
+//     setTimeout(() => {
+//       if (success) {
+//         resolve("Data fetched successfully!");
+//       } else {
+//         reject("Network error");
+//       }
+//     }, 500);
+//   });
+// };
+
+// retryPromise(fetchData, 5, 2000)
+//   .then((data) => console.log(data))
+//   .catch((err) => console.error("Operation failed after retries:", err));
+
+// function returnIndex(arr, target) {
+//   let ans = 0;
+//   for (let i = 0; i < arr.length; i++) {
+//     for (let j = i + 1; j < arr.length; j++) {
+//       ans = a[i] + a[j];
+//       if (ans === target) {
+//         return [i, j];
+//       }
+//     }
+//   }
+// }
+
+// let a = [1, 3, 4, 2];
+// console.log(returnIndex(a, 3));
+
+// function longestConsecutive(nums = []) {
+//   if (nums.length === 0) {
+//     return 0;
+//   }
+//   let sortNums = nums.sort((a, b) => a - b);
+//   console.log("sortNums", sortNums);
+//   let oldCOunt = 0;
+//   let count = 0;
+//   for (let i = 0; i < sortNums.length; i++) {
+//     const element = sortNums[i];
+//     if (element + 1 === sortNums[i + 1]) {
+//       count++;
+//     } else {
+//       oldCOunt = count;
+//       if (oldCOunt > count) {
+//         count = 0;
+//       }
+//     }
+//   }
+//   return count + 1;
+// }
+// console.log(longestConsecutive([9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6]));
+
+// var maxSubArray = function (nums = []) {
+//   if (nums.length === 0) {
+//     return 0;
+//   }
+//   let curSum = nums[0];
+//   let maxSum = nums[0];
+//   for (let i = 1; i < nums.length; i++) {
+//     curSum = Math.max(nums[i], curSum + nums[i]);
+//     if (curSum > maxSum) {
+//       maxSum = curSum;
+//     }
+//   }
+//   return maxSum;
+// };
+
+// console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+
+// function balanceBrackets(s = "") {
+//   const stack = [];
+//   const map = {
+//     "(": ")",
+//     "[": "]",
+//     "{": "}",
+//   };
+
+//   for (let i = 0; i < s.length; i++) {
+//     const char = s[i];
+//     if (map[char]) {
+//       stack.push(char);
+//     } else {
+//       const top = stack.pop();
+//       if (map[top] !== char) {
+//         return false;
+//       }
+//     }
+//   }
+// }
+
+// console.log(balanceBrackets("()[]"));
+
+// function findDuplicates(nums) {
+//   let newArr = new Set([...nums]);
+//   return newArr.size !== nums.length;
+// }
+
+// function maxProductSubArray(arr = []) {
+//   if (nums.length === 0) {
+//     return 0;
+//   }
+//   let curSum = nums[0];
+//   let maxSum = nums[0];
+//   for (let i = 1; i < nums.length; i++) {
+//     curSum = Math.max(nums[i], curSum * nums[i]);
+//     if (curSum > maxSum) {
+//       maxSum = curSum;
+//     }
+//   }
+//   return maxSum;
+// }
+
+// async function retryApiCall(apiFunction, maxRetries, retryInterval) {
+//   let attempts = 0;
+
+//   while (attempts < maxRetries) {
+//     console.log("attempts", attempts);
+
+//     try {
+//       // Attempt to call the API function
+//       const result = await apiFunction();
+//       return result; // If successful, return the result
+//     } catch (error) {
+//       attempts++;
+//       if (attempts >= maxRetries) {
+//         throw new Error("Max retry reached"); // If max retries reached, throw the error
+//       }
+//       // Wait for the specified retry interval before retrying
+//       await new Promise((resolve) => setTimeout(resolve, retryInterval));
+//     }
+//   }
+// }
+
+// async function exampleApiFunction() {
+//   // Simulate an API call that may fail
+//   if (Math.random() < 0.7) {
+//     throw new Error("API call failed");
+//   }
+//   return "API call succeeded";
+// }
+
+// retryApiCall(exampleApiFunction, 3, 1000)
+//   .then((result) => console.log(result))
+//   .catch((error) => console.error(error.message));
+
+// var missingNumber = function (nums = []) {
+//   let xor = 0;
+//   const n = nums.length;
+
+//   for (let i = 0; i < n; i++) {
+//     xor ^= nums[i];
+//   }
+
+//   for (let i = 0; i <= n; i++) {
+//     xor ^= i;
+//   }
+
+//   return xor;
+// };
+
+// const largeArray = Array.from({ length: 100000 }, (_, i) => i).filter(
+//   (num) => num !== 36289
+// );
+// console.log(missingNumber(largeArray));
+
+// console.log(missingNumber([3, 0, 1]));
+
+// function candy(rating = []) {
+//   let choc = 0;
+//   for (let i = 0; i < rating.length; i++) {
+//     let isOne = false;
+//     choc++;
+//     if (rating[i] > rating[i - 1]) {
+//       isOne = true;
+//       choc++;
+//     }
+//     if (rating[i] > rating[i + 1]) {
+//       if (isOne) {
+//         choc--;
+//       }
+//       choc++;
+//     }
+//   }
+//   return choc;
+// }
+
+// console.log(candy([1, 0, 2]));
+// console.log(candy([1, 3, 2, 2, 1]));
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+// function lengthOfLongestSubstring(s) {
+//   let charSet = new Set();
+//   let left = 0;
+//   let maxLength = 0;
+
+//   for (let right = 0; right < s.length; right++) {
+//     console.log("charSet", charSet);
+
+//     while (charSet.has(s[right])) {
+//       charSet.delete(s[left]);
+//       left++;
+//     }
+//     charSet.add(s[right]);
+//     maxLength = Math.max(maxLength, right - left + 1);
+//   }
+
+//   return maxLength;
+// }
+
+// console.log(lengthOfLongestSubstring("abcabcbb"));
+
+// let arr = [1, 2, 2];
+
+// for (let i = 0; i < 5; i++) {
+//   setTimeout(() => {
+//     console.log(arr[i] * 2);
+//   }, 1000);
+// }
+
+// function debounce(func, wait) {
+//   let timeout;
+
+//   return function executedFunction(...args) {
+//     const context = this;
+
+//     // Clear the timeout if the function is called again before it ends
+//     clearTimeout(timeout);
+
+//     // Set a new timeout
+//     timeout = setTimeout(() => {
+//       func.apply(context, args);
+//     }, wait);
+//   };
+// }
+
+// // Usage example:
+// const handleResize = () => {
+//   console.log("Window resized");
+// };
+
+// // Apply debounce - the handleResize function will only be called after 300 milliseconds of no resize events
+// window.addEventListener("resize", debounce(handleResize, 300));
+
+// Great! To generate all possible substrings, we can use two nested loops: one to select the starting point and the other to choose the ending point of the substring.
+
+// Here's a step-by-step guide:
+
+// Loop through each character as the start.
+// For each start, loop through the remaining characters as the end.
+// Extract the substring from start to end.
+// Shall we move on to checking if these substrings are palindromes?
+
+// var lengthOfLongestSubstring = function (s) {
+//   let charSet = new Set();
+//   let left = 0;
+//   let maxLength = 0;
+//   for (let right = 0; right < s.length; right++) {
+//     while (charSet.has(s[right])) {
+//       charSet.delete(s[left]);
+//       left++;
+//     }
+//     charSet.add(s[right]);
+//     console.log("right - left + 1", right - left + 1);
+
+//     maxLength = Math.max(maxLength, right - left + 1);
+//   }
+
+//   return maxLength;
+// };
+
+// console.log(lengthOfLongestSubstring("abcabcbb"));
+
+// /**
+//  * @param {string} s
+//  * @param {string} t
+//  * @return {string}
+//  */
+// function minWindow(s, t) {
+//   let minLength = Infinity;
+//   let minWindow = "";
+
+//   for (let i = 0; i < s.length; i++) {
+//     for (let j = i; j < s.length; j++) {
+//       let substring = s.slice(i, j + 1);
+//       if (containsAllCharacters(substring, t)) {
+//         if (substring.length < minLength) {
+//           minLength = substring.length;
+//           minWindow = substring;
+//         }
+//       }
+//     }
+//   }
+
+//   return minWindow;
+// }
+
+// function containsAllCharacters(substring, t) {
+//   let tCount = {};
+//   for (let char of t) {
+//     tCount[char] = (tCount[char] || 0) + 1;
+//   }
+//   console.log("tCount", tCount);
+
+//   let substringCount = {};
+//   for (let char of substring) {
+//     substringCount[char] = (substringCount[char] || 0) + 1;
+//   }
+//   console.log("substringCount", substringCount);
+//   for (let char in tCount) {
+//     if (!substringCount[char] || substringCount[char] < tCount[char]) {
+//       return false;
+//     }
+//   }
+
+//   return true;
+// }
+
+// console.log(minWindow("ADOBECODEBANC", "ABC"));
+
+/**
+ * @param {integer} init
+ * @return { increment: Function, decrement: Function, reset: Function }
+ */
+// var createCounter = function (init) {
+//   let initialVal = init;
+//   return {
+//     increment: () => {
+//       return ++init;
+//     },
+//     decrement: () => {
+//       return --init;
+//     },
+//     reset: () => {
+//       init = initialVal;
+//       return init;
+//     },
+//   };
+// };
+
+// const counter = createCounter(5);
+// console.log(counter.increment());
+// console.log(counter.reset());
+// console.log(counter.decrement());
+
+// /**
+//  * @param {number[]} arr
+//  * @param {Function} fn
+//  * @return {number[]}
+//  */
+// var map = function (arr, fn) {
+//   let newArr = [];
+//   for (let i = 0; i < arr.length; i++) {
+//     const element = fn(arr[i], i);
+//     newArr.push(element);
+//   }
+//   return newArr;
+// };
+// let arr = [1, 2, 3],
+//   fn = function plusone(n) {
+//     return n + 1;
+//   };
+
+// console.log(map(arr, fn));
+
+// /**
+//  * @param {number[]} arr
+//  * @param {Function} fn
+//  * @return {number[]}
+//  */
+// var filter = function (arr, fn) {
+//   let newArr = [];
+//   for (let i = 0; i < arr.length; i++) {
+//     if (fn(arr[i], i)) {
+//       const element = arr[i];
+//       newArr.push(element);
+//     }
+//   }
+//   return newArr;
+// };
+
+// let arr = [1, 2, 3],
+//   fn = function firstIndex(n, i) {
+//     return i === 0;
+//   };
+// console.log(filter(arr, fn));
+
+// let nums = [1, 2, 3, 4],
+//   fn = function sum(accum, curr) {
+//     return accum + curr * curr;
+//   },
+//   init = 100;
+
+// /**
+//  * @param {number[]} nums
+//  * @param {Function} fn
+//  * @param {number} init
+//  * @return {number}
+//  */
+// var reduce = function (nums, fn, init) {
+//   let currAcc = init;
+//   for (let i = 0; i < nums.length; i++) {
+//     const element = nums[i];
+//     currAcc = fn(currAcc, element);
+//   }
+//   return currAcc;
+// };
+
+// console.log(reduce(nums, fn, init));
+
+// /**
+//  * @param {Function} fn
+//  * @param {Array} args
+//  * @param {number} t
+//  * @return {Function}
+//  */
+// var cancellable = function (fn, args, t) {
+//   let id = setTimeout(() => {
+//     fn(...args);
+//   }, t);
+//   return function cancelFn() {
+//     clearTimeout(id);
+//   };
+// };
+
+// const result = [];
+
+// const fn = (x) => x * 5;
+// const args = [2],
+//   t = 20,
+//   cancelTimeMs = 50;
+
+// const start = performance.now();
+
+// const log = (...argsArr) => {
+//   const diff = Math.floor(performance.now() - start);
+//   result.push({ time: diff, returned: fn(...argsArr) });
+// };
+
+// const cancel = cancellable(log, args, t);
+
+// const maxT = Math.max(t, cancelTimeMs);
+
+// setTimeout(cancel, cancelTimeMs);
+
+// setTimeout(() => {
+//   console.log(result); // [{"time":20,"returned":10}]
+// }, maxT + 15);
+
+// /**
+//  * @param {...(null|boolean|number|string|Array|Object)} args
+//  * @return {number}
+//  */
+// var argumentsLength = function (...args) {
+//   return [...args].length;
+// };
+
+// let args = [{}, null, "3"];
+// console.log(argumentsLength(args));
+
+// let list = [1, 2].push(3);
+// console.log(typeof list);
+
+// /**
+//  * @param {Function} fn
+//  * @return {Function}
+//  */
+// var once = function (fn) {
+//   let count = 0;
+//   return function (...args) {
+//     if (count === 0) {
+//       count = 1;
+//       return fn(...args);
+//     }
+//   };
+// };
+
+// let fn = (a, b, c) => a + b + c;
+// let onceFn = once(fn);
+
+// console.log(onceFn(1, 2, 3));
+// console.log(onceFn(2, 2, 3));
+
+// /**
+//  * @param {number} target
+//  * @param {number[]} nums
+//  * @return {number}
+//  */
+// var minSubArrayLen = function (target, nums) {
+//   let left = 0,
+//     right = 0;
+//   let minLength = Infinity;
+//   let sum = 0;
+//   while (right < nums.length) {
+//     right++;
+//     sum = sum + nums[right];
+//     while (sum >= target) {
+//       minLength = Math.min(minLength, right - left);
+//       sum = sum - nums[left];
+//       left++;
+//     }
+//   }
+//   return minLength;
+// };
+
+// let target = 7,
+//   nums = [2, 3, 1, 2, 4, 3];
+// console.log(minSubArrayLen(target, nums));
+
+// /**
+//  * @param {number[]} height
+//  * @return {number}
+//  */
+// var maxArea = function (height) {
+//   let left = 0,
+//     right = height.length - 1,
+//     maxArea = 0;
+
+//   while (left < right) {
+//     let currWidth = right - left;
+//     let currHeight = Math.min(height[left], height[right]);
+//     let currArea = currWidth * currHeight;
+//     maxArea = Math.max(maxArea, currArea);
+//     if (height[left] < height[right]) {
+//       left++;
+//     } else {
+//       right--;
+//     }
+//   }
+//   return maxArea;
+// };
+
+// let height = [1, 8, 6, 2, 5, 4, 8, 3, 7];
+// console.log(maxArea(height));
+
+// /**
+//  * @param {string} s
+//  * @return {boolean}
+//  */
+// var isPalindrome = function (s) {
+//   let start = 0,
+//     end = s.length - 1,
+//     isValid = true;
+//   s = s.toLowerCase();
+//   while (start < end) {
+//     if (
+//       !(
+//         (s[start] >= "A" && s[start] <= "Z") ||
+//         (s[start] >= "a" && s[start] <= "z") ||
+//         (s[start] >= "0" && s[start] <= "9")
+//       )
+//     ) {
+//       start++;
+//       continue;
+//     } else if (
+//       !(
+//         (s[end] >= "A" && s[end] <= "Z") ||
+//         (s[end] >= "a" && s[end] <= "z") ||
+//         (s[end] >= "0" && s[end] <= "9")
+//       )
+//     ) {
+//       end--;
+//       continue;
+//     }
+//     if (s[start] !== s[end]) {
+//       isValid = false;
+//       break;
+//     } else {
+//       start++;
+//       end--;
+//     }
+//   }
+//   return isValid;
+// };
+
+// let s = "a.";
+// console.log(isPalindrome(s));
+
+// /**
+//  * @param {string} s
+//  * @param {string} t
+//  * @return {boolean}
+//  */
+// var isSubsequence = function (s, t) {
+//   let sIndex = 0,
+//     tIndex = 0;
+
+//   if (s === "") {
+//     return true;
+//   }
+
+//   while (tIndex < t.length) {
+//     if (s[sIndex] === t[tIndex]) {
+//       sIndex++;
+//     }
+//     tIndex++;
+//     if (sIndex === s.length) {
+//       return true;
+//     }
+//   }
+
+//   return false;
+// };
+
+// let s = "acb",
+//   t = "ahbgdc";
+// console.log(isSubsequence(s, t));
+
+// /**
+//  * @param {number[]} nums
+//  * @return {number}
+//  */
+// var maxSubArray = function (nums) {
+//   if (nums.length === 0) {
+//     return 0;
+//   }
+//   let currSum = nums[0];
+//   let maxSum = nums[0];
+
+//   for (let i = 1; i < nums.length; i++) {
+//     currSum = Math.max(nums[i], currSum + nums[i]);
+//     if (currSum > maxSum) {
+//       maxSum = currSum;
+//     }
+//   }
+//   console.log(T);
+
+//   return maxSum;
+// };
+
+// let nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+// console.log(maxSubArray(nums));
+
+// /**
+//  * @param {number[]} prices
+//  * @return {number}
+//  */
+// var maxProfit = function (prices) {
+//   if (prices.length === 0) return 0;
+
+//   let firstBuy = -Infinity;
+//   let firstSell = 0;
+//   let secondBuy = -Infinity;
+//   let secondSell = 0;
+
+//   for (let price of prices) {
+//     firstBuy = Math.max(firstBuy, -price);
+//     firstSell = Math.max(firstSell, firstBuy + price);
+//     secondBuy = Math.max(secondBuy, firstSell - price);
+//     secondSell = Math.max(secondSell, secondBuy + price);
+//   }
+
+//   return secondSell;
+// };
+// let prices = [3, 3, 5, 0, 0, 3, 1, 4];
+// console.log(maxProfit(prices));
+
+// function bfs(graph, startNode, goalNode) {
+//   let queue = [startNode];
+//   let visited = new Set();
+//   visited.add(startNode);
+//   console.log("visited", visited);
+
+//   while (queue.length > 0) {
+//     let currentNode = queue.shift();
+//     console.log("currentNode", currentNode);
+
+//     if (currentNode === goalNode) {
+//       console.log(`Path found from ${startNode} to ${goalNode}`);
+//       return true;
+//     }
+
+//     let neighbors = graph[currentNode];
+//     console.log("neighbors", neighbors);
+
+//     for (let neighbor of neighbors) {
+//       if (!visited.has(neighbor)) {
+//         queue.push(neighbor);
+//         visited.add(neighbor);
+//       }
+//     }
+//     console.log("queue", queue);
+//   }
+
+//   console.log(`No path found from ${startNode} to ${goalNode}`);
+//   return false;
+// }
+
+// const graph = {
+//   A: ["B", "C"],
+//   B: ["A", "D", "E"],
+//   C: ["A", "F"],
+//   D: ["B"],
+//   E: ["B", "F"],
+//   F: ["C", "E"],
+// };
+// // Test BFS
+// // bfs(graph, "A", "F");
+// function dfsRecursive(graph, currentNode, goalNode, visited = new Set()) {
+//   visited.add(currentNode);
+
+//   if (currentNode === goalNode) {
+//     console.log(`Path found from ${currentNode} to ${goalNode}`);
+//     return true;
+//   }
+
+//   let neighbors = graph[currentNode];
+//   for (let neighbor of neighbors) {
+//     if (!visited.has(neighbor)) {
+//       if (dfsRecursive(graph, neighbor, goalNode, visited)) {
+//         return true;
+//       }
+//     }
+//   }
+
+//   return false;
+// }
+
+// // Test DFS Recursive
+// dfsRecursive(graph, "A", "F");
+
+// /**
+//  * @param {string} s
+//  * @return {string}
+//  */
+// var reverseWords = function (s) {
+//   return (result = s
+//     .split(" ")
+//     .filter((e) => e != "")
+//     .reverse()
+//     .join(" ")
+//     .trim());
+// };
+
+// let s = "a good   example";
+// console.log(reverseWords(s));
+
+// Definition for a binary tree node.
+function TreeNode(val, left, right) {
+  this.val = val === undefined ? 0 : val;
+  this.left = left === undefined ? null : left;
+  this.right = right === undefined ? null : right;
+}
+
+// Function to convert an array representation of a binary tree to a TreeNode structure
+function arrayToTree(array) {
+  if (!array.length) return null;
+
+  let root = new TreeNode(array[0]);
+  let queue = [root];
+  let i = 1;
+
+  while (i < array.length) {
+    let current = queue.shift();
+
+    if (array[i] !== null) {
+      current.left = new TreeNode(array[i]);
+      queue.push(current.left);
+    }
+    i++;
+
+    if (i < array.length && array[i] !== null) {
+      current.right = new TreeNode(array[i]);
+      queue.push(current.right);
+    }
+    i++;
+  }
+
+  return root;
+}
+
+// var maxDepth = function (root) {
+//   if (root === null) {
+//     return 0;
+//   }
+
+//   let leftDepth = maxDepth(root.left);
+//   let rightDepth = maxDepth(root.right);
+
+//   return Math.max(leftDepth, rightDepth) + 1;
+// };
+
+let array = [3, 9, 20, null, null, 15, 7];
+let root = arrayToTree(array);
+
+// /**
+//  * @param {TreeNode} root
+//  * @return {number[][]}
+//  */
+// var levelOrder = function (root) {
+//   if (root === null) {
+//     return [];
+//   }
+
+//   let result = [];
+//   let queue = [root];
+
+//   while (queue.length > 0) {
+//     let levelSize = queue.length;
+//     let currentLevel = [];
+
+//     for (let i = 0; i < levelSize; i++) {
+//       let node = queue.shift();
+//       currentLevel.push(node.val);
+
+//       if (node.left !== null) {
+//         queue.push(node.left);
+//       }
+//       if (node.right !== null) {
+//         queue.push(node.right);
+//       }
+//     }
+
+//     result.push(currentLevel);
+//   }
+
+//   return result;
+// };
+
+// console.log(levelOrder(root));
+
+// /**
+//  * @param {number[]} nums
+//  * @param {number} k
+//  * @return {number}
+//  */
+// var countSubarrays = function (nums, k) {
+//   let maxElement = 0;
+//   for (let n of nums) {
+//     maxElement = Math.max(maxElement, n);
+//   }
+
+//   let count = 0;
+//   let l = 0;
+//   let n = nums.length;
+//   let maxFound = 0;
+
+//   for (let r = 0; r < n; r++) {
+//     if (nums[r] === maxElement) maxFound++;
+
+//     while (maxFound === k) {
+//       count += n - r;
+//       if (nums[l] === maxElement) maxFound--;
+//       l++;
+//     }
+//   }
+
+//   return count;
+// };
+
+// let nums = [1, 3, 2, 3, 3],
+//   k = 2;
+// console.log(countSubarrays(nums, k));
+
+// /**
+//  * @param {number} n
+//  * @param {number[][]} buildings
+//  * @return {number}
+//  */
+// var countCoveredBuildings = function (n, buildings) {
+//   let grid = Array.from({ length: n }, () => Array(n).fill(0));
+
+//   for (let [x, y] of buildings) {
+//     grid[x - 1][y - 1] = 1;
+//   }
+//   console.log(grid);
+
+//   let count = 0;
+//   for (let i = 1; i < n - 1; i++) {
+//     for (let j = 1; j < n - 1; j++) {
+//       if (
+//         grid[i][j] === 1 &&
+//         grid[i - 1][j] === 1 &&
+//         grid[i + 1][j] === 1 &&
+//         grid[i][j - 1] === 1 &&
+//         grid[i][j + 1] === 1
+//       ) {
+//         count++;
+//       }
+//     }
+//   }
+//   return count;
+// };
+
+// let n = 5,
+//   buildings = [
+//     [1, 3],
+//     [3, 2],
+//     [3, 3],
+//     [3, 5],
+//     [5, 3],
+//   ];
+// console.log(countCoveredBuildings(n, buildings));
+
+// /**
+//  * @param {number[]} nums
+//  * @return {number}
+//  */
+// var findNumbers = function (nums) {
+//   let evenCount = 0;
+//   for (let i = 0; i < nums.length; i++) {
+//     let num = nums[i];
+//     let digitCount = num.toString().length;
+//     if (digitCount % 2 === 0) {
+//       evenCount++;
+//     }
+//   }
+//   return evenCount;
+// };
+
+// let nums = [12, 345, 2, 6, 7896];
+
+// console.log(findNumbers(nums));
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var jump = function (nums) {
+  let jumps = 0;
+  let currentEnd = 0;
+  let farthest = 0;
+
+  for (let i = 0; i < nums.length - 1; i++) {
+    farthest = Math.max(farthest, i + nums[i]);
+
+    if (i === currentEnd) {
+      jumps++;
+      currentEnd = farthest;
+
+      if (currentEnd >= nums.length - 1) {
+        break;
+      }
+    }
+  }
+
+  return jumps;
+};
+
+let nums = [2, 3, 1, 1, 4];
+console.log(jump(nums));

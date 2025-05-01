@@ -1,0 +1,36 @@
+/* style.css */
+.tic-tac-toe {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: #f0f0f0;
+    border: 1px solid #000;
+    cursor: pointer;
+  }
+  
+  #reset-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  #winner-text {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  

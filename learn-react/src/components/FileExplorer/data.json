@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "isFolder": true,
+    "name": "root",
+    "child": [
+      {
+        "id": 11,
+        "isFolder": true,
+        "name": "A",
+        "child": [
+          {
+            "id": 112,
+            "isFolder": false,
+            "name": "AC"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "isFolder": false,
+        "name": "AB"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "isFolder": true,
+    "name": "public",
+    "child": [
+      {
+        "id": 21,
+        "isFolder": true,
+        "name": "B"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "isFolder": false,
+    "name": "src"
+  }
+]
