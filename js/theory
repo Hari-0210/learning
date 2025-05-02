@@ -1,0 +1,227 @@
+# JavaScript Interview Questions & Answers
+
+---
+
+## For Freshers & Entry-Level
+
+### 1. What is the difference between `var`, `let`, and `const`?
+
+- `var`: Function-scoped, can be re-declared and updated, hoisted (initialized as `undefined`).
+- `let`: Block-scoped, cannot be re-declared in the same scope, can be updated, not initialized until declaration.
+- `const`: Block-scoped, cannot be re-declared or updated (must be initialized), but objects/arrays can have their contents changed.
+
+---
+
+### 2. Explain hoisting in JavaScript.
+
+Hoisting is JavaScript's default behavior of moving declarations to the top of the current scope. `var` declarations are hoisted and initialized as `undefined`. `let` and `const` are hoisted but not initialized (temporal dead zone).
+
+---
+
+### 3. What are JavaScript data types?
+
+- Primitive: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`
+- Non-primitive: `object` (including arrays, functions, dates, etc.)
+
+---
+
+### 4. What is a closure and how does it work?
+
+A closure is a function that remembers its outer (enclosing) scope even after the outer function has finished executing. It allows access to variables from an outer function scope in an inner function.
+
+---
+
+### 5. What is the difference between `==` and `===`?
+
+- `==`: Loose equality, compares values after type coercion.
+- `===`: Strict equality, compares both value and type (no type coercion).
+
+---
+
+### 6. What is the DOM and how is it related to JavaScript?
+
+The DOM (Document Object Model) is a tree-like structure representing the HTML elements of a web page. JavaScript can manipulate the DOM to change content, structure, and style dynamically.
+
+---
+
+### 7. What are arrow functions and how are they different from normal functions?
+
+Arrow functions (`() => {}`) are a concise syntax for writing functions. They do not have their own `this`, `arguments`, or `super`, and cannot be used as constructors.
+
+---
+
+### 8. What is event bubbling and event delegation?
+
+- **Event Bubbling:** Events propagate from the innermost element up to the parent elements.
+- **Event Delegation:** Using a single event listener on a parent element to handle events for multiple child elements, leveraging event bubbling.
+
+---
+
+### 9. What are template literals in ES6?
+
+Template literals are string literals allowing embedded expressions, multi-line strings, and interpolation using backticks (`` ` ``) and `${}` syntax.
+
+---
+
+### 10. How does `this` work in JavaScript?
+
+`this` refers to the object that is executing the current function:
+
+- In a method, `this` is the object.
+- Alone, `this` is the global object (or `undefined` in strict mode).
+- In event handlers, `this` is the element.
+- Arrow functions inherit `this` from their parent scope.
+
+---
+
+## For Mid-Level Developers
+
+### 1. How does the JavaScript event loop work?
+
+The event loop continuously checks the call stack and the message queue. If the call stack is empty, it pushes the first message from the queue to the stack for execution, enabling asynchronous behavior.
+
+---
+
+### 2. What is the difference between synchronous and asynchronous code?
+
+- **Synchronous:** Code executes line by line, blocking further execution until the current operation completes.
+- **Asynchronous:** Code executes without blocking, allowing other operations to run while waiting for tasks (like I/O) to complete.
+
+---
+
+### 3. How do Promises work?
+
+A Promise represents a value that may be available now, later, or never. It has three states: pending, fulfilled, or rejected. You use `.then()` for success and `.catch()` for errors.
+
+---
+
+### 4. What is async/await?
+
+`async` functions return a Promise. `await` pauses the execution of an async function until the Promise resolves, making asynchronous code look synchronous.
+
+---
+
+### 5. What is the difference between `map`, `filter`, and `reduce`?
+
+- `map`: Transforms each element in an array and returns a new array.
+- `filter`: Returns a new array with elements that pass a test.
+- `reduce`: Reduces the array to a single value by accumulating results.
+
+---
+
+### 6. Explain the concept of prototype and prototypal inheritance.
+
+Every JavaScript object has a prototype. Objects inherit properties and methods from their prototype. Prototypal inheritance allows objects to share behavior via their prototype chain.
+
+// Parent constructor function
+function Animal(name) {
+this.name = name;
+}
+
+// Adding a method to Animal's prototype
+Animal.prototype.speak = function() {
+return `${this.name} makes a noise.`;
+};
+
+// Child constructor function
+function Dog(name, breed) {
+Animal.call(this, name); // Call parent constructor
+this.breed = breed;
+}
+
+// Inherit from Animal
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+// Add a method specific to Dog
+Dog.prototype.bark = function() {
+return `${this.name} barks!`;
+};
+
+// Usage
+const dog = new Dog('Buddy', 'Golden Retriever');
+console.log(dog.speak()); // Buddy makes a noise.
+console.log(dog.bark()); // Buddy barks!
+
+---
+
+### 7. How does the `bind`, `call`, and `apply` methods work?
+
+- `call`: Invokes a function with a given `this` value and arguments (comma-separated).
+- `apply`: Like `call`, but arguments are provided as an array.
+- `bind`: Returns a new function with a bound `this` value and optional preset arguments.
+
+---
+
+### 8. What are modules in JavaScript and how do you use import/export?
+
+Modules allow code organization and reuse. Use `export` to expose variables/functions/classes, and `import` to bring them into other files.
+
+<!-- ```js
+// module.js
+export function foo() {}
+// main.js
+import { foo } from './module.js' -->
+
+---
+
+### 9. What are higher-order functions?
+
+Functions that take other functions as arguments or return functions as results (e.g., map , filter , reduce ).
+
+---
+
+### 10. Explain debouncing and throttling with use cases.
+
+- Debouncing: Ensures a function is called only after a certain period of inactivity (e.g., search input).
+- Throttling: Ensures a function is called at most once in a specified time interval (e.g., window resize, scroll events).
+
+## For Senior-Level / SDE2+
+
+### 1. Explain memory management in JavaScript (Garbage Collection).
+
+JavaScript uses automatic garbage collection. The engine frees memory occupied by objects that are no longer referenced (unreachable). Common algorithms: mark-and-sweep, reference counting.
+
+### 2. How does JavaScript handle concurrency and what is the call stack?
+
+JavaScript is single-threaded. The call stack manages function execution. Concurrency is handled via the event loop, callbacks, Promises, and async/await, allowing non-blocking I/O.
+
+### 3. What are Web Workers?
+
+Web Workers allow running scripts in background threads, separate from the main UI thread, enabling parallelism and preventing UI blocking for heavy computations.
+
+### 4. How would you handle large JSON files on the client side?
+
+- Use streaming parsers (e.g., oboe.js ).
+- Process data in chunks.
+- Use Web Workers to parse/process without blocking the UI.
+- Paginate or lazy-load data.
+
+### 5. What are service workers and how do they support PWA?
+
+Service workers are scripts that run in the background, intercepting network requests, caching assets, and enabling offline functionality, push notifications, and background sync for Progressive Web Apps (PWAs).
+
+### 6. What are generators and how are they different from async functions?
+
+Generators ( function\* ) can pause and resume execution using yield . They return iterators. Async functions ( async ) return Promises and use await for asynchronous code. Generators are for custom iteration, async functions for async flow.
+
+### 7. How do you secure JavaScript applications from XSS/CSRF?
+
+- XSS: Sanitize user input, use Content Security Policy (CSP), escape output.
+- CSRF: Use anti-CSRF tokens, same-site cookies, and proper authentication.
+
+### 8. How does JavaScript’s event loop differ from Node.js’s?
+
+Node.js event loop includes additional phases (timers, I/O callbacks, idle, poll, check, close callbacks) to handle server-side operations, whereas browsers focus on UI and user events.
+
+### 9. How does JavaScript handle floating point arithmetic issues?
+
+JavaScript uses IEEE 754 double-precision floating-point numbers, leading to precision errors (e.g., 0.1 + 0.2 !== 0.3 ). Use libraries like decimal.js or round numbers to mitigate.
+
+### 10. When would you use WeakMap or WeakSet?
+
+Use WeakMap or WeakSet when you want to store objects without preventing their garbage collection. Useful for caching or tracking objects without memory leaks
+
+```
+
+```
