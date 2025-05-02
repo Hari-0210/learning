@@ -1,0 +1,312 @@
+Certainly! Here’s a detailed explanation of each topic you mentioned, with code examples where appropriate. I’ll organize the answers by section for clarity.
+
+---
+
+## 💻 DSA – LeetCode Medium Level Questions
+
+### 1. Letter Combinations of a Phone Number
+
+**Explanation:**  
+Given a string of digits, map each digit to its corresponding letters on a classic phone keypad and generate all possible letter combinations.
+
+**Approach:**  
+Use backtracking to build all combinations.
+
+**Code Example:**
+
+```
+function letterCombinations(digits) {
+  if (!digits) return [];
+  const map = {
+    '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+    '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
+  };
+  const result = [];
+  function backtrack(index, path) {
+    if (index === digits.length) {
+      result.push(path);
+      return;
+    }
+    for (let char of map[digits[index]]) {
+      backtrack(index + 1, path + char);
+    }
+  }
+  backtrack(0, '');
+  return result;
+}
+
+// Example usage:
+console.log(letterCombinations("23")); // ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+```
+
+---
+
+### 2. Combination Sum
+
+**Explanation:**  
+Given an array of candidates and a target, find all unique combinations where the chosen numbers sum to the target. Each number can be used unlimited times.
+
+**Approach:**  
+Use backtracking to explore all combinations.
+
+**Code Example:**
+
+```
+function combinationSum(candidates, target) {
+  const result = [];
+  function backtrack(remaining, combo, start) {
+    if (remaining === 0) {
+      result.push([...combo]);
+      return;
+    }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i] <= remaining) {
+        combo.push(candidates[i]);
+        backtrack(remaining - candidates[i], combo, i);
+        combo.pop();
+      }
+    }
+  }
+  backtrack(target, [], 0);
+  return result;
+}
+
+// Example usage:
+console.log(combinationSum([2,3,6,7], 7)); // [[2,2,3],[7]]
+```
+
+---
+
+## ⚙️ Advanced JavaScript Questions
+
+### Closures
+
+**Explanation:**  
+A closure is a function that remembers its lexical scope even when executed outside that scope.
+
+**Real-world use case:**  
+Implementing private variables.
+
+**Code Example:**
+
+```
+function createCounter() {
+  let count = 0; // private variable
+  return {
+    increment: () => ++count,
+    decrement: () => --count,
+    get: () => count
+  };
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+console.log(counter.get());       // 2
+```
+
+---
+
+### Event Loop in JavaScript
+
+**Explanation:**  
+The event loop is a mechanism that allows JavaScript to perform non-blocking operations by offloading operations to the browser (or Node.js) and executing callbacks when the stack is empty.
+
+- **setTimeout:** Schedules a callback after a delay (macro-task).
+- **Promises:** Micro-tasks, executed after the current call stack but before the next macro-task.
+- **async/await:** Syntactic sugar over Promises.
+
+**Example:**
+
+```
+console.log('Start');
+
+setTimeout(() => console.log('Timeout'), 0);
+
+Promise.resolve().then(() => console.log('Promise'));
+
+console.log('End');
+
+// Output order: Start, End, Promise, Timeout
+```
+
+---
+
+### == vs === and Type Coercion
+
+- `==` checks for value equality with type coercion.
+- `===` checks for value and type equality (no coercion).
+
+**Example:**
+
+```
+console.log(0 == '0');   // true (type coercion)
+console.log(0 === '0');  // false (different types)
+```
+
+**Type coercion can cause bugs in large apps, so prefer `===` for predictable behavior.**
+
+---
+
+### Deep Clone an Object (Handling Circular References)
+
+**Explanation:**  
+Deep cloning copies all nested objects/arrays. Circular references require special handling.
+
+**Code Example:**
+
+```
+function deepClone(obj, hash = new WeakMap()) {
+  if (Object(obj) !== obj) return obj; // primitives
+  if (hash.has(obj)) return hash.get(obj); // circular ref
+  const result = Array.isArray(obj) ? [] : {};
+  hash.set(obj, result);
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      result[key] = deepClone(obj[key], hash);
+    }
+  }
+  return result;
+}
+
+// Example with circular reference:
+const a = { foo: 'bar' };
+a.self = a;
+const b = deepClone(a);
+console.log(b); // { foo: 'bar', self: [Circular] }
+```
+
+---
+
+## ⚛️ React & Frontend Situational Questions
+
+### Optimizing a Slow React App
+
+**Techniques:**
+
+- **React.memo:** Memoizes functional components.
+- **useMemo:** Memoizes expensive calculations.
+- **useCallback:** Memoizes functions.
+- **Lazy Loading:** Loads components only when needed.
+
+**Example:**
+
+```
+import React, { useMemo, useCallback } from 'react';
+
+const ExpensiveComponent = React.memo(({ data }) => {
+  // ...expensive rendering
+  return <div>{data}</div>;
+});
+
+function Parent({ items }) {
+  const processed = useMemo(() => items.map(i => i * 2), [items]);
+  const handleClick = useCallback(() => { /* ... */ }, []);
+  return (
+    <ExpensiveComponent data={processed} onClick={handleClick} />
+  );
+}
+```
+
+---
+
+### Controlled vs Uncontrolled Components
+
+- **Controlled:** Value is managed by React state.
+- **Uncontrolled:** Value is managed by the DOM.
+
+**Example:**
+
+```
+// Controlled
+function ControlledInput() {
+  const [value, setValue] = React.useState('');
+  return <input value={value} onChange={e => setValue(e.target.value)} />;
+}
+
+// Uncontrolled
+function UncontrolledInput() {
+  const inputRef = React.useRef();
+  return <input ref={inputRef} />;
+}
+```
+
+---
+
+### useReducer vs useState
+
+- **useState:** For simple state logic.
+- **useReducer:** For complex state logic or when next state depends on previous state.
+
+**Example:**
+
+```
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment': return { count: state.count + 1 };
+    case 'decrement': return { count: state.count - 1 };
+    default: throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = React.useReducer(reducer, { count: 0 });
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+    </>
+  );
+}
+```
+
+---
+
+### Handling Global State Without Redux
+
+- **Context API:** For simple global state.
+- **Zustand:** Lightweight state management.
+- **React Query:** For server state/data-fetching.
+
+**Example (Context API):**
+
+```
+const GlobalContext = React.createContext();
+
+function GlobalProvider({ children }) {
+  const [user, setUser] = React.useState(null);
+  return (
+    <GlobalContext.Provider value={{ user, setUser }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+}
+
+// Usage in child
+function Profile() {
+  const { user } = React.useContext(GlobalContext);
+  return <div>{user?.name}</div>;
+}
+```
+
+---
+
+### React’s Reconciliation Process & Keys
+
+**Explanation:**  
+Reconciliation is how React updates the DOM efficiently. Keys help React identify which items have changed, are added, or are removed in a list, improving performance and avoiding bugs.
+
+**Example:**
+
+```
+function List({ items }) {
+  return (
+    <ul>
+      {items.map(item => (
+        <li key={item.id}>{item.value}</li> // Use unique, stable keys!
+      ))}
+    </ul>
+  );
+}
+```
