@@ -8,6 +8,7 @@ import ReactFlowComp from "./screen/ReactFlow";
 import FileExplorer from "./components/FileExplorer";
 import TrafficLight from "./screen/traffic";
 import Debounce from "./screen/Debounce";
+import InfiniteScroll from "./components/InfiniteScroll";
 
 const StyledContent = styled("main")(() => ({
   flexGrow: 1,
@@ -32,6 +33,7 @@ function App() {
             <Route path="/fileexplorer" element={<FileExplorer />} />
             <Route path="/traffic" element={<TrafficLight />} />
             <Route path="/debounce" element={<Debounce />} />
+            <Route path="/infinitescroll" element={<InfiniteScroll />} />
             {/* <Route path="/querybuilder" element={<QueryBuilder />} /> */}
             {/* Add more routes as needed */}
           </Routes>

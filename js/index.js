@@ -939,29 +939,341 @@ let root = arrayToTree(array);
 // console.log(findNumbers(nums));
 
 /**
- * @param {number[]} nums
- * @return {number}
- */
-var jump = function (nums) {
-  let jumps = 0;
-  let currentEnd = 0;
-  let farthest = 0;
+//  * @param {number[]} nums
+//  * @return {number}
+//  */
+// var jump = function (nums) {
+//   let jumps = 0;
+//   let currentEnd = 0;
+//   let farthest = 0;
 
-  for (let i = 0; i < nums.length - 1; i++) {
-    farthest = Math.max(farthest, i + nums[i]);
+//   for (let i = 0; i < nums.length - 1; i++) {
+//     farthest = Math.max(farthest, i + nums[i]);
 
-    if (i === currentEnd) {
-      jumps++;
-      currentEnd = farthest;
+//     if (i === currentEnd) {
+//       jumps++;
+//       currentEnd = farthest;
 
-      if (currentEnd >= nums.length - 1) {
-        break;
-      }
-    }
-  }
+//       if (currentEnd >= nums.length - 1) {
+//         break;
+//       }
+//     }
+//   }
 
-  return jumps;
-};
+//   return jumps;
+// };
 
-let nums = [2, 3, 1, 1, 4];
-console.log(jump(nums));
+// let nums = [2, 3, 1, 1, 4];
+// console.log(jump(nums));
+
+// function letterCombinations(digits) {
+//   if (!digits) return [];
+//   const map = {
+//     2: "abc",
+//     3: "def",
+//     4: "ghi",
+//     5: "jkl",
+//     6: "mno",
+//     7: "pqrs",
+//     8: "tuv",
+//     9: "wxyz",
+//   };
+//   const result = [];
+//   function backtrack(index, path) {
+//     if (index === digits.length) {
+//       console.log("in index", index);
+//       console.log("in path", path);
+//       result.push(path);
+//       return;
+//     }
+//     console.log("path", path);
+//     console.log("digits", digits);
+//     console.log("index", index);
+//     console.log("digits[index]", digits[index]);
+//     console.log("map[digits[index]]", map[digits[index]]);
+//     for (let char of map[digits[index]]) {
+//       console.log("char", char);
+//       backtrack(index + 1, path + char);
+//     }
+//     console.log("-----------------------");
+//   }
+//   backtrack(0, "");
+//   return result;
+// }
+
+// // Example usage:
+// console.log(letterCombinations("23"));
+
+// let num = 1;
+// console.log(num--); // Outputs: 2
+// console.log(num);
+
+// /**
+//  * @param {number[]} nums
+//  * @return {number[]}
+//  */
+// var productExceptSelf = function (nums) {
+//   let n = nums.length;
+//   let result = new Array(n).fill(1);
+
+//   let leftProduct = 1;
+//   for (let i = 0; i < n; i++) {
+//     result[i] = leftProduct;
+//     leftProduct *= nums[i];
+//   }
+
+//   let rightProduct = 1;
+//   for (let i = n - 1; i >= 0; i--) {
+//     result[i] *= rightProduct;
+//     rightProduct *= nums[i];
+//   }
+
+//   return result;
+// };
+
+// let nums = [1, 2, 3, 4];
+// console.log(productExceptSelf(nums));
+
+// function numEquivDominoPairs(dominoes) {
+//   const map = new Map();
+//   let count = 0;
+//   for (const [a, b] of dominoes) {
+//     const key = a < b ? `${a},${b}` : `${b},${a}`;
+//     if (map.has(key)) {
+//       count += map.get(key);
+//       map.set(key, map.get(key) + 1);
+//     } else {
+//       map.set(key, 1);
+//     }
+//   }
+//   return count;
+// }
+// let dominoes = [
+//   [1, 2],
+//   [2, 1],
+//   [3, 4],
+//   [5, 6],
+// ];
+// console.log(numEquivDominoPairs(dominoes));
+
+// /**
+//  * @param {number[]} nums
+//  * @return {number[]}
+//  */
+// var buildArray = function (nums) {
+//   let result = new Array(nums.length);
+//   for (let i = 0; i < nums.length; i++) {
+//     result[i] = nums[nums[i]];
+//   }
+//   return result;
+// };
+// let nums = [0, 2, 1, 5, 3, 4];
+// console.log(buildArray(nums));
+
+// function minimumTimeToReachLastRoom(moveTime) {
+//   const n = moveTime.length;
+//   const m = moveTime[0].length;
+//   const directions = [
+//     [1, 0],
+//     [-1, 0],
+//     [0, 1],
+//     [0, -1],
+//   ];
+//   const queue = [[0, 0, 0]];
+//   const visited = new Set(["0,0"]);
+
+//   while (queue.length > 0) {
+//     const [row, col, time] = queue.shift();
+
+//     if (row === n - 1 && col === m - 1) return time;
+
+//     for (const [dr, dc] of directions) {
+//       const newRow = row + dr;
+//       const newCol = col + dc;
+//       const newTime = time + 1;
+
+//       if (
+//         newRow >= 0 &&
+//         newRow < n &&
+//         newCol >= 0 &&
+//         newCol < m &&
+//         !visited.has(`${newRow},${newCol}`)
+//       ) {
+//         const waitTime = Math.max(moveTime[newRow][newCol] - time, 0);
+//         const adjustedTime = time + 1 + waitTime;
+
+//         visited.add(`${newRow},${newCol}`);
+//         queue.push([newRow, newCol, adjustedTime]);
+//       }
+//     }
+//   }
+//   return -1;
+// }
+
+// let moveTime = [
+//   [0, 4],
+//   [4, 4],
+// ];
+// console.log(minimumTimeToReachLastRoom(moveTime));
+
+// function minimumTimeToReachLastRoom(moveTime) {
+//   const n = moveTime.length;
+//   const m = moveTime[0].length;
+//   const directions = [
+//     [1, 0],
+//     [-1, 0],
+//     [0, 1],
+//     [0, -1],
+//   ];
+
+//   const pq = [[0, 0, 0]];
+//   const visited = new Set();
+
+//   while (pq.length > 0) {
+//     pq.sort((a, b) => a[0] - b[0]);
+//     const [time, row, col] = pq.shift();
+
+//     if (row === n - 1 && col === m - 1) return time;
+
+//     const key = `${row},${col}`;
+//     if (visited.has(key)) continue;
+//     visited.add(key);
+
+//     for (const [dr, dc] of directions) {
+//       const newRow = row + dr;
+//       const newCol = col + dc;
+
+//       if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m) {
+//         const waitTime = Math.max(moveTime[newRow][newCol] - time, 0);
+//         const newTime = time + 1 + waitTime;
+
+//         pq.push([newTime, newRow, newCol]);
+//       }
+//     }
+//   }
+
+//   return -1;
+// }
+
+// console.log(minimumTimeToReachLastRoom(moveTime));
+
+// let i = 0,
+//   j = 10;
+
+// while (i++ < j--) {}
+// console.log(i, j);
+
+// /**
+//  * @param {number} x
+//  * @return {number}
+//  */
+// var reverse = function (x) {
+//   let ans =
+//     parseInt(x.toString().split("").reverse().join("").replace(/-/g, "")) *
+//     Math.sign(x);
+//   return ans > Math.pow(2, 31) - 1 ? 0 : ans < Math.pow(-2, 31) ? 0 : ans;
+// };
+
+// let x = 1534236469;
+// console.log(reverse(x));
+
+// /**`
+//  * @param {number[]} arr
+//  * @return {boolean}
+//  */
+// var threeConsecutiveOdds = function (arr) {
+//   let count = 0;
+//   for (let i = 0; i < arr.length; i++) {
+//     if (arr[i] % 2 !== 0) {
+//       count++;
+//       if (count === 3) {
+//         return true;
+//       }
+//     } else {
+//       count = 0;
+//     }
+//   }
+//   return false;
+// };
+
+// let arr = [2, 6, 4, 1];
+// console.log(threeConsecutiveOdds(arr));`
+
+// /**
+//  * @param {number[]} nums
+//  * @param {number} target
+//  * @return {number}
+//  */
+// var search = function (nums, target) {
+//   let left = 0;
+//   let right = nums.length - 1;
+
+//   while (left <= right) {
+//     let mid = Math.floor((left + right) / 2);
+
+//     if (nums[mid] === target) {
+//       return mid;
+//     }
+
+//     if (nums[left] <= nums[mid]) {
+//       if (nums[left] <= target && target < nums[mid]) {
+//         right = mid - 1;
+//       } else {
+//         left = mid + 1;
+//       }
+//     } else {
+//       if (nums[mid] < target && target <= nums[right]) {
+//         left = mid + 1;
+//       } else {
+//         right = mid - 1;
+//       }
+//     }
+//   }
+
+//   return -1;
+// };
+
+// let nums = [4, 5, 6, 7, 0, 1, 2],
+//   target = 0;
+// console.log(search(nums, target));
+
+// /**
+//  * @param {number} num
+//  * @return {string}
+//  */
+// var intToRoman = function (num) {
+//   const romanMap = [
+//     [1000, "M"],
+//     [900, "CM"],
+//     [500, "D"],
+//     [400, "CD"],
+//     [100, "C"],
+//     [90, "XC"],
+//     [50, "L"],
+//     [40, "XL"],
+//     [10, "X"],
+//     [9, "IX"],
+//     [5, "V"],
+//     [4, "IV"],
+//     [1, "I"],
+//   ];
+
+//   let result = "";
+
+//   for (const [value, symbol] of romanMap) {
+//     while (num >= value) {
+//       result += symbol;
+//       num -= value;
+//     }
+//   }
+
+//   return result;
+// };
+
+// let num = 3749;
+// console.log(intToRoman(num));
+
+// const date = new Date(0); // Unix epoch (Jan 1, 1970)
+// console.log(date + 1);
+// console.log(date - 1);
+// console.log([] + [] + "1" + 0);
