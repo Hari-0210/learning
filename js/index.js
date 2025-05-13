@@ -1277,3 +1277,145 @@ let root = arrayToTree(array);
 // console.log(date + 1);
 // console.log(date - 1);
 // console.log([] + [] + "1" + 0);
+
+// /**
+//  * @param {number[]} digits
+//  * @return {number[]}
+//  */
+// var findEvenNumbers = function (digits) {
+//   const freq = new Array(10).fill(0);
+
+//   for (const digit of digits) {
+//     freq[digit]++;
+//   }
+
+//   const result = [];
+
+//   for (let num = 100; num <= 999; num++) {
+//     const hundreds = Math.floor(num / 100);
+//     const tens = Math.floor((num % 100) / 10);
+//     const ones = num % 10;
+
+//     if (ones % 2 !== 0) continue;
+
+//     freq[hundreds]--;
+//     freq[tens]--;
+//     freq[ones]--;
+
+//     if (freq[hundreds] >= 0 && freq[tens] >= 0 && freq[ones] >= 0) {
+//       result.push(num);
+//     }
+
+//     freq[hundreds]++;
+//     freq[tens]++;
+//     freq[ones]++;
+//   }
+
+//   return result;
+// };
+
+// let digits = [2, 1, 3, 0];
+// console.log(findEvenNumbers(digits));
+
+// /**
+//  * @param {character[][]} grid
+//  * @return {number}
+//  */
+// var numIslands = function (grid) {
+//   if (grid.length === 0) return 0;
+
+//   const rows = grid.length;
+//   const cols = grid[0].length;
+
+//   function dfs(grid, i, j) {
+//     if (i < 0 || j < 0 || i >= rows || j >= cols || grid[i][j] === "0") {
+//       return;
+//     }
+
+//     grid[i][j] = "0";
+
+//     dfs(grid, i + 1, j);
+//     dfs(grid, i - 1, j);
+//     dfs(grid, i, j + 1);
+//     dfs(grid, i, j - 1);
+//   }
+
+//   let numIslands = 0;
+
+//   for (let i = 0; i < rows; i++) {
+//     for (let j = 0; j < cols; j++) {
+//       if (grid[i][j] === "1") {
+//         numIslands += 1;
+//         dfs(grid, i, j);
+//       }
+//     }
+//   }
+
+//   return numIslands;
+// };
+// let grid = [
+//   ["1", "1", "0", "0", "0"],
+//   ["1", "1", "0", "0", "0"],
+//   ["0", "0", "1", "0", "0"],
+//   ["0", "0", "0", "1", "1"],
+// ];
+// console.log(numIslands(grid));
+
+// /**
+//  * @param {string} s
+//  * @return {boolean}
+//  */
+// var isValid = function (s) {
+//   let arr = [];
+//   let map = {
+//     "(": ")",
+//     "{": "}",
+//     "[": "]",
+//   };
+//   for (let i = 0; i < s.length; i++) {
+//     if (s[i] in map) {
+//       arr.push(s[i]);
+//     } else {
+//       if (arr.length === 0 || map[arr.pop()] !== s[i]) {
+//         return false;
+//       }
+//     }
+//   }
+//   return arr.length === 0;
+// };
+
+// let s = "(]";
+// console.log(isValid(s));
+
+// /**
+//  * @param {string} s
+//  * @param {number} t
+//  * @return {number}
+//  */
+// var lengthAfterTransformations = function (s, t) {
+//   const MOD = 1000000007;
+//   let cnt = Array(26).fill(0);
+
+//   for (let char of s) {
+//     cnt[char.charCodeAt(0) - "a".charCodeAt(0)]++;
+//   }
+
+//   for (let j = 0; j < t; j++) {
+//     let tmp = Array(26).fill(0);
+//     for (let i = 0; i < 26; i++) {
+//       if (i === 25) {
+//         tmp[0] = (tmp[0] + cnt[i]) % MOD;
+//         tmp[1] = (tmp[1] + cnt[i]) % MOD;
+//       } else {
+//         tmp[i + 1] = (tmp[i + 1] + cnt[i]) % MOD;
+//       }
+//     }
+//     cnt = tmp;
+//   }
+
+//   return cnt.reduce((sum, val) => (sum + val) % MOD, 0);
+// };
+
+// let s = "abcyy",
+//   t = 2;
+// console.log(lengthAfterTransformations(s, t));

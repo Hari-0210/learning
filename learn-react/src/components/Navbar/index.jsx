@@ -159,6 +159,7 @@ export default function Navbar() {
             { text: "Traffic Light", path: "/traffic" },
             { text: "Debounce", path: "/debounce" },
             { text: "Infinite Scroll", path: "/infinitescroll" },
+            { text: "Event Planner", path: "/eventplanner" },
           ].map((item, index) => (
             <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
