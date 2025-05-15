@@ -762,38 +762,38 @@
 // console.log(reverseWords(s));
 
 // Definition for a binary tree node.
-function TreeNode(val, left, right) {
-  this.val = val === undefined ? 0 : val;
-  this.left = left === undefined ? null : left;
-  this.right = right === undefined ? null : right;
-}
+// function TreeNode(val, left, right) {
+//   this.val = val === undefined ? 0 : val;
+//   this.left = left === undefined ? null : left;
+//   this.right = right === undefined ? null : right;
+// }
 
 // Function to convert an array representation of a binary tree to a TreeNode structure
-function arrayToTree(array) {
-  if (!array.length) return null;
+// function arrayToTree(array) {
+//   if (!array.length) return null;
 
-  let root = new TreeNode(array[0]);
-  let queue = [root];
-  let i = 1;
+//   let root = new TreeNode(array[0]);
+//   let queue = [root];
+//   let i = 1;
 
-  while (i < array.length) {
-    let current = queue.shift();
+//   while (i < array.length) {
+//     let current = queue.shift();
 
-    if (array[i] !== null) {
-      current.left = new TreeNode(array[i]);
-      queue.push(current.left);
-    }
-    i++;
+//     if (array[i] !== null) {
+//       current.left = new TreeNode(array[i]);
+//       queue.push(current.left);
+//     }
+//     i++;
 
-    if (i < array.length && array[i] !== null) {
-      current.right = new TreeNode(array[i]);
-      queue.push(current.right);
-    }
-    i++;
-  }
+//     if (i < array.length && array[i] !== null) {
+//       current.right = new TreeNode(array[i]);
+//       queue.push(current.right);
+//     }
+//     i++;
+//   }
 
-  return root;
-}
+//   return root;
+// }
 
 // var maxDepth = function (root) {
 //   if (root === null) {
@@ -806,8 +806,8 @@ function arrayToTree(array) {
 //   return Math.max(leftDepth, rightDepth) + 1;
 // };
 
-let array = [3, 9, 20, null, null, 15, 7];
-let root = arrayToTree(array);
+// let array = [3, 9, 20, null, null, 15, 7];
+// let root = arrayToTree(array);
 
 // /**
 //  * @param {TreeNode} root
@@ -1419,3 +1419,129 @@ let root = arrayToTree(array);
 // let s = "abcyy",
 //   t = 2;
 // console.log(lengthAfterTransformations(s, t));
+
+// Define a simple binary tree node
+// class TreeNode {
+//   constructor(val, left = null, right = null) {
+//     this.val = val;
+//     this.left = left;
+//     this.right = right;
+//   }
+// }
+
+// // Example tree:
+// //     1
+// //    / \
+// //   2   3
+// //  / \
+// // 4   5
+
+// const root = new TreeNode(
+//   1,
+//   new TreeNode(2, new TreeNode(4), new TreeNode(5)),
+//   new TreeNode(3)
+// );
+
+// // Preorder: Node, Left, Right
+// function preorder(node, result = []) {
+//   if (!node) return;
+//   result.push(node.val);
+//   preorder(node.left, result);
+//   preorder(node.right, result);
+//   return result;
+// }
+
+// // Inorder: Left, Node, Right
+// function inorder(node, result = []) {
+//   if (!node) return;
+//   inorder(node.left, result);
+//   result.push(node.val);
+//   inorder(node.right, result);
+//   return result;
+// }
+
+// // Postorder: Left, Right, Node
+// function postorder(node, result = []) {
+//   if (!node) return;
+//   postorder(node.left, result);
+//   postorder(node.right, result);
+//   result.push(node.val);
+//   return result;
+// }
+
+// console.log("Preorder:", preorder(root)); // [1, 2, 4, 5, 3]
+// console.log("Inorder:", inorder(root)); // [4, 2, 5, 1, 3]
+// console.log("Postorder:", postorder(root)); // [4, 5, 2, 3, 1]
+
+class SimpleHashMap {
+  constructor(size = 53) {
+    this.buckets = Array(size)
+      .fill(null)
+      .map(() => []);
+    this.size = size;
+  }
+
+  // Simple hash function for string keys
+  _hash(key) {
+    let hash = 0;
+    const strKey = String(key);
+    for (let i = 0; i < strKey.length; i++) {
+      hash = (hash * 31 + strKey.charCodeAt(i)) % this.size;
+    }
+    console.log("hash", hash);
+
+    return hash;
+  }
+
+  set(key, value) {
+    const idx = this._hash(key);
+    for (let pair of this.buckets[idx]) {
+      if (pair[0] === key) {
+        pair[1] = value;
+        return;
+      }
+    }
+    this.buckets[idx].push([key, value]);
+  }
+
+  get(key) {
+    const idx = this._hash(key);
+    for (let pair of this.buckets[idx]) {
+      if (pair[0] === key) {
+        return pair[1];
+      }
+    }
+    return undefined;
+  }
+
+  has(key) {
+    const idx = this._hash(key);
+    for (let pair of this.buckets[idx]) {
+      if (pair[0] === key) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  delete(key) {
+    const idx = this._hash(key);
+    for (let i = 0; i < this.buckets[idx].length; i++) {
+      if (this.buckets[idx][i][0] === key) {
+        this.buckets[idx].splice(i, 1);
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+// Example usage:
+const map = new SimpleHashMap();
+map.set("abc", 123);
+map.set("acb", 456);
+map.set("bca", 456);
+console.log(map.get("abc")); // 123
+// console.log(map.has('bar')); // true
+// map.delete('foo');
+// console.log(map.get('foo')); // undefined

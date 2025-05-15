@@ -355,3 +355,74 @@ function customSetInterval(fn, delay) {
     clear: () => clearTimeout(timerId),
   };
 }
+
+// 9. Simple HashMap Polyfill
+class SimpleHashMap {
+  constructor(size = 53) {
+    this.buckets = Array(size)
+      .fill(null)
+      .map(() => []);
+    this.size = size;
+  }
+
+  // Simple hash function for string keys
+  _hash(key) {
+    let hash = 0;
+    const strKey = String(key);
+    for (let i = 0; i < strKey.length; i++) {
+      hash = (hash * 31 + strKey.charCodeAt(i)) % this.size;
+    }
+    return hash;
+  }
+
+  set(key, value) {
+    const idx = this._hash(key);
+    for (let pair of this.buckets[idx]) {
+      if (pair[0] === key) {
+        pair[1] = value;
+        return;
+      }
+    }
+    this.buckets[idx].push([key, value]);
+  }
+
+  get(key) {
+    const idx = this._hash(key);
+    for (let pair of this.buckets[idx]) {
+      if (pair[0] === key) {
+        return pair[1];
+      }
+    }
+    return undefined;
+  }
+
+  has(key) {
+    const idx = this._hash(key);
+    for (let pair of this.buckets[idx]) {
+      if (pair[0] === key) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  delete(key) {
+    const idx = this._hash(key);
+    for (let i = 0; i < this.buckets[idx].length; i++) {
+      if (this.buckets[idx][i][0] === key) {
+        this.buckets[idx].splice(i, 1);
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+// Example usage:
+// const map = new SimpleHashMap();
+// map.set('foo', 123);
+// map.set('bar', 456);
+// console.log(map.get('foo')); // 123
+// console.log(map.has('bar')); // true
+// map.delete('foo');
+// console.log(map.get('foo')); // undefined
